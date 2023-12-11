@@ -1,6 +1,7 @@
 from chatterbot import ChatBot
 from chatterbot.trainers import ChatterBotCorpusTrainer
 import requests
+import spacy
 
 OPENWEATHERMAP_API_KEY = "796f007a9f74ec0567a8f036a26e642b"
 
@@ -24,6 +25,10 @@ def get_weather(city):
 
 def initialize_chatbot():
     chatbot = ChatBot("WeatherBot")
+
+    nlp = spacy.load("en_core_web_sm")
+
+    chatbot.storage.tagger = nlp
     trainer = ChatterBotCorpusTrainer(chatbot)
 
     trainer.train("chatterbot.corpus.english")
@@ -31,7 +36,7 @@ def initialize_chatbot():
     return chatbot
 
 def chatbot():
-    print("Hello! I'm a weather chatbot. Ask me about the weather in a city or just chat with me.")
+    print("Hello! I'm a chatbot. Ask me about the weather in a city or just chat with me.")
     weather_bot = initialize_chatbot()
 
     while True:
